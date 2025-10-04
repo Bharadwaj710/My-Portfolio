@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Enable smooth scrolling for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* small helper to pause marquee on hover */
+.marquee-container .animate-marquee {
+  animation-play-state: running;
+}
+.marquee-container:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* optional: hide scrollbar on WebKit */
+.marquee-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Improve scrolling experience */
+body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Project Card and Carousel Styles */
+.project-card-image {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Optimize animations performance */
+.project-card {
+  will-change: transform;
+}
+
+/* Smooth image transitions */
+.project-image-transition {
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Ensure carousel indicators are clickable */
+.carousel-indicator {
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.carousel-indicator:hover {
+  transform: scale(1.5);
+}
+
+/* Optimize image rendering */
+.project-card img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
