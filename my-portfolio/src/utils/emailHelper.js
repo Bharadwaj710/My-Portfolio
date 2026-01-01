@@ -19,41 +19,48 @@ export const handleEmail = (subject = "", body = "") => {
 
   const gmailWebUrl = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
 
-  // 1. Desktop Flow - Guaranteed Success
+  // 1. Desktop Flow
   if (!isMobile) {
     window.open(gmailWebUrl, '_blank');
     return;
   }
 
-  // 2. Android Flow - Modern Intent with Native Fallback
-  // This is the most "Perfect" Android fix:
-  // - package=com.google.android.gm forces the Gmail app.
-  // - S.browser_fallback_url ensures that if the app is NOT installed, 
-  //   the browser automatically opens the web version instead of doing nothing.
+  // 2. Android Flow - FORCE Gmail App via specific System Intent
+  // We use the VIEW action with a mailto URI and specific package binding.
+  // This is much harder for the browser to hijack than an https-based intent.
   if (isAndroid) {
-    const androidIntent = `intent://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}#Intent;scheme=https;package=com.google.android.gm;S.browser_fallback_url=${encodeURIComponent(gmailWebUrl)};end`;
+    const androidIntent = `intent:#Intent;action=android.intent.action.VIEW;data=mailto:${email}?subject=${encodedSubject}&body=${encodedBody};package=com.google.android.gm;S.browser_fallback_url=${encodeURIComponent(gmailWebUrl)};end`;
     window.location.href = androidIntent;
     return;
   }
 
-  // 3. iOS Flow - Deep Link with Timeout Failsafe
+  // 3. iOS Flow - Gmail-first with System and Web Fallbacks
   if (isiOS) {
     const gmailAppUri = `googlegmail:///co?to=${email}&subject=${encodedSubject}&body=${encodedBody}`;
+    const mailtoUri = `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
     const start = Date.now();
     
-    // Attempt to open the app
+    // Stage 1: Attempt Gmail specifically
     window.location.href = gmailAppUri;
 
-    // Failsafe: iOS doesn't have a native "fallback" in the URL like Android.
-    // So we wait 1.2s; if the user hasn't switched to the App (browser still active), we open web.
+    // Stage 2 & 3: Progressive Fallback if Gmail app isn't found
     setTimeout(() => {
-      if (Date.now() - start < 1500) {
-        window.location.href = gmailWebUrl;
+      // If we're still in the browser after 1.5s
+      if (Date.now() - start < 2000) {
+        // Attempt system default mail app
+        window.location.href = mailtoUri;
+        
+        // Wait another 1.2s; if STILL in browser, final fallback to web
+        setTimeout(() => {
+          if (Date.now() - start < 3500) {
+            window.location.href = gmailWebUrl;
+          }
+        }, 1200);
       }
-    }, 1200);
+    }, 1500);
     return;
   }
 
-  // 4. Generic Mobile Fallback (e.g. windows phone, tablet browsers)
+  // 4. Generic Mobile Fallback
   window.location.href = `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
 };
