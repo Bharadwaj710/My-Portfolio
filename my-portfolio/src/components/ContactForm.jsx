@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { handleEmail } from "../utils/emailHelper";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
@@ -13,21 +14,11 @@ export default function ContactForm() {
     
     // Simulate send
     setTimeout(() => {
-        const email = "bharadwajflasmup@gmail.com";
-        const isTouch = typeof window !== 'undefined' && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-        
-        const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+        const subject = `Portfolio Contact from ${name}`;
         const bodyArr = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-        const bodyContent = encodeURIComponent(bodyArr);
         
-        if (isTouch) {
-          // Universal Mobile/Tablet: Standard mailto link
-          window.location.href = `mailto:${email}?subject=${subject}&body=${bodyContent}`;
-        } else {
-          // Desktop: Open Gmail web compose in new tab
-          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${bodyContent}`;
-          window.open(gmailUrl, '_blank');
-        }
+        // Use the Universal Smart Email Helper
+        handleEmail(subject, bodyArr);
         
         setStatus("success");
     }, 1500);
@@ -63,14 +54,8 @@ export default function ContactForm() {
                     </div>
                     <a 
                       onClick={(e) => {
-                        const email = "bharadwajflasmup@gmail.com";
-                        const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-                        
-                        if (isTouch) {
-                          window.location.href = `mailto:${email}`;
-                        } else {
-                          window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, "_blank");
-                        }
+                        e.preventDefault();
+                        handleEmail();
                       }}
                       className="hover:text-white transition-colors cursor-pointer"
                     >
