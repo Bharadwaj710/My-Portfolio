@@ -1,6 +1,10 @@
+/* Import Urbanist font from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 /* Enable smooth scrolling for the whole page */
 html {
@@ -20,10 +24,11 @@ html {
   display: none;
 }
 
-/* Improve scrolling experience */
+/* Improve scrolling experience and set default font */
 body {
   overflow-y: auto;
   overflow-x: hidden;
+  font-family: 'Urbanist', sans-serif;
 }
 
 /* Project Card and Carousel Styles */
@@ -57,4 +62,23 @@ body {
 .project-card img {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+}
+/* perspective utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+
+
+/* Radial gradient utility */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Force hardware acceleration for transforms */
+.curved-section-wrapper {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
 }

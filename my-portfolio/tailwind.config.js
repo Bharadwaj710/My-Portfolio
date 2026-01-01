@@ -3,6 +3,9 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        urbanist: ["Urbanist", "sans-serif"],
+      },
       keyframes: {
         marquee: {
           "0%": { transform: "translateX(0)" },
