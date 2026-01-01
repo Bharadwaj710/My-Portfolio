@@ -13,12 +13,21 @@ export default function ContactForm() {
     
     // Simulate send
     setTimeout(() => {
+        const isTouch = typeof window !== 'undefined' && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
         const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
         const bodyArr = `Name: ${name}\nEmail: ${email}\n\n${message}`;
         const bodyContent = encodeURIComponent(bodyArr);
         
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=bharadwajflasmup@gmail.com&su=${subject}&body=${bodyContent}`;
-        window.open(gmailUrl, '_blank');
+        if (isTouch) {
+          // Mobile/Tablet: Open default mail client
+          const mailtoUrl = `mailto:bharadwajflasmup@gmail.com?subject=${subject}&body=${bodyContent}`;
+          window.location.href = mailtoUrl;
+        } else {
+          // Desktop: Open Gmail web compose in new tab
+          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=bharadwajflasmup@gmail.com&su=${subject}&body=${bodyContent}`;
+          window.open(gmailUrl, '_blank');
+        }
+        
         setStatus("success");
     }, 1500);
   };
@@ -49,13 +58,18 @@ export default function ContactForm() {
             <div className="space-y-4 mt-12">
                 <div className="flex items-center gap-4 text-gray-300">
                     <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v10a2 2 0 002 2z" /></svg>
                     </div>
                     <a 
-                      href="https://mail.google.com/mail/?view=cm&fs=1&to=bharadwajflasmup@gmail.com" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="hover:text-white transition-colors"
+                      onClick={(e) => {
+                        const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+                        if (isTouch) {
+                          window.location.href = "mailto:bharadwajflasmup@gmail.com";
+                        } else {
+                          window.open("https://mail.google.com/mail/?view=cm&fs=1&to=bharadwajflasmup@gmail.com", "_blank");
+                        }
+                      }}
+                      className="hover:text-white transition-colors cursor-pointer"
                     >
                         bharadwajflasmup@gmail.com
                     </a>
