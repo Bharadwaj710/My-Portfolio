@@ -31,6 +31,7 @@ export default function ImmersiveSkillsSection() {
     <section
       id="skills"
       className="relative w-full bg-black overflow-hidden py-32"
+      style={{ contain: 'paint' }}
     >
       {/* Background Ambience - Subtle White/Gray */}
       <div className="absolute inset-0 pointer-events-none -z-10">

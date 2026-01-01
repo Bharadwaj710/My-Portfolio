@@ -27,6 +27,7 @@ export default function AboutFloatingSkills() {
     <section
       id="about"
       className="relative bg-black py-32 overflow-hidden"
+      style={{ contain: 'paint' }}
     >
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
         {/* TEXT CONTENT */}

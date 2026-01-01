@@ -14,10 +14,10 @@ const Card = ({ i, title, description, tech, link, images, color, progress, rang
     <div 
       ref={container} 
       className="h-screen flex items-start justify-center sticky top-0"
-      style={{ top: topOffset, paddingTop: '60px' }}
+      style={{ top: topOffset, paddingTop: '60px', contain: 'layout' }}
     >
       <motion.div 
-        style={{ scale: cardScale }} 
+        style={{ scale: cardScale, willChange: 'transform' }} 
         className="relative w-full max-w-7xl h-[60vh] flex flex-col md:flex-row gap-8 md:gap-12 px-4"
       >
         {/* LEFT: Floating Glass Image Section (Monochrome) */}

@@ -7,8 +7,8 @@ import Logo from "./Logo";
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [showButton, setShowButton] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  // Show button only after scrolling past Hero (0.7vh to be safe)
   useEffect(() => {
     const handleScroll = () => {
       // Logic: Show if scrolled past 70% of viewport
@@ -20,11 +20,15 @@ export default function Navigation() {
       }
     };
     
-    // Initial check in case of reload
-    handleScroll();
+    const checkIsDesktop = () => setIsDesktop(window.innerWidth >= 768);
+    checkIsDesktop();
     
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", checkIsDesktop);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", checkIsDesktop);
+    };
   }, []);
 
   const menuItems = [
@@ -75,6 +79,7 @@ export default function Navigation() {
             animate={{ clipPath: "circle(150% at calc(100% - 40px) 40px)" }}
             exit={{ clipPath: "circle(0% at calc(100% - 40px) 40px)" }}
             transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }} 
+            style={{ willChange: 'clip-path' }}
             className="fixed inset-0 z-[9999] bg-zinc-950 flex items-center justify-center p-4 md:p-20 text-white"
           >
             
@@ -111,33 +116,35 @@ export default function Navigation() {
                  ))}
                </div>
 
-                {/* Right: Stylized Card with Spline */}
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
-                  className="hidden md:flex w-full md:w-1/2 h-96 bg-zinc-900 rounded-[2.5rem] relative overflow-hidden items-center justify-center shadow-2xl"
-                >
-                   {/* Spline Background */}
-                   <div className="absolute inset-0 w-full h-full opacity-100">
-                      <Spline scene="https://prod.spline.design/PIA7BlRgB6HhBz0f/scene.splinecode" />
-                   </div>
-                   
-                   <div className="absolute bottom-8 left-8 text-white font-urbanist z-10 flex items-center gap-3">
-                      <Logo className="w-8 h-8" />
-                      <div>
-                        <p className="text-xs uppercase tracking-widest font-bold opacity-50">Portfolio </p>
-                        <p className="text-xl text-white font-urbanist">Bharadwaj</p>
-                      </div>
-                   </div>
+                {/* Right: Stylized Card with Spline (Desktop Only) */}
+                {isDesktop && (
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                    className="hidden md:flex w-full md:w-1/2 h-96 bg-zinc-900 rounded-[2.5rem] relative overflow-hidden items-center justify-center shadow-2xl"
+                  >
+                    {/* Spline Background */}
+                    <div className="absolute inset-0 w-full h-full opacity-100">
+                        <Spline scene="https://prod.spline.design/PIA7BlRgB6HhBz0f/scene.splinecode" />
+                    </div>
+                    
+                    <div className="absolute bottom-8 left-8 text-white font-urbanist z-10 flex items-center gap-3">
+                        <Logo className="w-8 h-8" />
+                        <div>
+                          <p className="text-xs uppercase tracking-widest font-bold opacity-50">Portfolio </p>
+                          <p className="text-xl text-white font-urbanist">Bharadwaj</p>
+                        </div>
+                    </div>
 
-                  {/* Bottom-right badge (covers Spline watermark) */}
-<div className="absolute bottom-5 right-1 z-10">
-  <div className="px-4 py-3 bg-white/90 backdrop-blur-md text-black rounded-full text-xs font-bold uppercase tracking-wide border border-white/20 shadow-lg">
-    Available for work
-  </div>
-</div>
-               </motion.div>
+                    {/* Bottom-right badge (covers Spline watermark) */}
+                    <div className="absolute bottom-5 right-1 z-10">
+                      <div className="px-4 py-3 bg-white/90 backdrop-blur-md text-black rounded-full text-xs font-bold uppercase tracking-wide border border-white/20 shadow-lg">
+                        Available for work
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
 
             </div>
           </motion.div>

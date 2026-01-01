@@ -6,21 +6,36 @@ import AnimatedNavLink from "./AnimatedNavLink";
 import Logo from "./Logo";
 
 export default function SplineHero() {
+  const [isDesktop, setIsDesktop] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkIsDesktop = () => setIsDesktop(window.innerWidth >= 768);
+    checkIsDesktop();
+    window.addEventListener('resize', checkIsDesktop);
+    return () => window.removeEventListener('resize', checkIsDesktop);
+  }, []);
+
   return (
     <section className="relative w-full h-screen overflow-hidden bg-black">
       
       {/* Cinematic Reveal - Scene Fades In, Scales Down, and Clears Blur */}
-      <motion.div
-        initial={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
-        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-        transition={{ duration: 2.5, delay: 2.2, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute inset-0 w-full h-full"
-      >
-        <Spline
-          scene="https://prod.spline.design/uIR4KYYy0DxHXp0P/scene.splinecode"
-          className="w-full h-full pointer-events-none"
-        />
-      </motion.div>
+      {isDesktop ? (
+        <motion.div
+           initial={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+           transition={{ duration: 2.5, delay: 2.2, ease: [0.22, 1, 0.36, 1] }}
+           className="absolute inset-0 w-full h-full"
+        >
+          <Spline
+            scene="https://prod.spline.design/uIR4KYYy0DxHXp0P/scene.splinecode"
+            className="w-full h-full pointer-events-none"
+          />
+        </motion.div>
+      ) : (
+        <div className="absolute inset-0 bg-[#050505]">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_80%)]" />
+        </div>
+      )}
 
       {/* Dark overlay with its own fade */}
       <motion.div 

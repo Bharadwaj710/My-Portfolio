@@ -22,9 +22,12 @@ export default function CustomCursor() {
   const isFirstMove = useRef(true);
 
   useEffect(() => {
-    // 1. Feature Detection
+    // 1. Feature Detection - Completely disable on touch devices
     const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-    if (isTouch) return;
+    if (isTouch) {
+      setIsVisible(false);
+      return;
+    }
     
     setIsVisible(true);
 

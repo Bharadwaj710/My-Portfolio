@@ -27,7 +27,7 @@ export default function CurvedSection({ children, nextBgColor = "#000000" }) {
   );
 
   return (
-    <section ref={containerRef} className="relative w-full bg-black">
+    <section ref={containerRef} className="relative w-full bg-black" style={{ contain: 'paint' }}>
       {/* Content - no transforms, fully visible */}
       {children}
 
@@ -36,7 +36,8 @@ export default function CurvedSection({ children, nextBgColor = "#000000" }) {
         className="absolute bottom-0 left-0 w-full h-[100px] overflow-visible pointer-events-none" 
         style={{ 
           zIndex: 50,
-          opacity: curveOpacity 
+          opacity: curveOpacity,
+          willChange: 'opacity'
         }}
       >
         <svg

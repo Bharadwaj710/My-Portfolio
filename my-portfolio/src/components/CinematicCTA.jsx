@@ -43,7 +43,7 @@ export default function CinematicCTA() {
       className="relative h-[300vh] bg-black"
     >
       {/* Sticky Content Wrapper - Pins the section to the viewport */}
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center w-full max-w-7xl mx-auto px-6 overflow-hidden">
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center w-full max-w-7xl mx-auto px-6 overflow-hidden" style={{ contain: 'paint' }}>
         
         {/* Background Ambience */}
         <div className="absolute inset-0 pointer-events-none -z-10">
@@ -65,6 +65,7 @@ export default function CinematicCTA() {
               clipPath: useTransform(fillCurve, v => `inset(0 ${v}% 0 0)`),
               WebkitTextStroke: "2px white", 
               filter: "drop-shadow(0 0 8px rgba(255,255,255,0.1))",
+              willChange: 'clip-path'
             }}
             className="absolute top-0 left-0 w-full text-5xl md:text-7xl lg:text-8xl font-black font-urbanist uppercase tracking-tighter text-black leading-[0.9] pointer-events-none select-none"
           >
@@ -78,7 +79,8 @@ export default function CinematicCTA() {
               style={{
                 opacity: buttonOpacity,
                 y: buttonY,
-                pointerEvents: useTransform(smoothProgress, v => v > 0.8 ? "auto" : "none")
+                pointerEvents: useTransform(smoothProgress, v => v > 0.8 ? "auto" : "none"),
+                willChange: 'transform, opacity'
               }}
               className="flex flex-col items-center gap-6"
             >
