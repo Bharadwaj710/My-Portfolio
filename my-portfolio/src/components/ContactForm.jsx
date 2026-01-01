@@ -14,16 +14,15 @@ export default function ContactForm() {
     // Simulate send
     setTimeout(() => {
         const email = "bharadwajflasmup@gmail.com";
-        const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isTouch = typeof window !== 'undefined' && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
         
         const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
         const bodyArr = `Name: ${name}\nEmail: ${email}\n\n${message}`;
         const bodyContent = encodeURIComponent(bodyArr);
         
-        if (isMobile) {
-          // Mobile: Open Gmail App directly with official URI
-          // This avoids "mailto:" appearing in the recipient field
-          window.location.href = `googlegmail:///co?to=${email}&subject=${subject}&body=${bodyContent}`;
+        if (isTouch) {
+          // Universal Mobile/Tablet: Standard mailto link
+          window.location.href = `mailto:${email}?subject=${subject}&body=${bodyContent}`;
         } else {
           // Desktop: Open Gmail web compose in new tab
           const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${bodyContent}`;
@@ -65,10 +64,10 @@ export default function ContactForm() {
                     <a 
                       onClick={(e) => {
                         const email = "bharadwajflasmup@gmail.com";
-                        const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                        const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
                         
-                        if (isMobile) {
-                          window.location.href = `googlegmail:///co?to=${email}`;
+                        if (isTouch) {
+                          window.location.href = `mailto:${email}`;
                         } else {
                           window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, "_blank");
                         }
