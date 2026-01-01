@@ -102,10 +102,21 @@ export default function CinematicCTA() {
                 {/* Social Links Row - Black Fill / White Borders */}
                 <div className="flex items-center gap-6 mt-4">
                   {(() => {
-                    const isTouch = typeof window !== 'undefined' && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-                    const emailUrl = isTouch 
-                      ? "mailto:bharadwajflasmup@gmail.com" 
-                      : "https://mail.google.com/mail/?view=cm&fs=1&to=bharadwajflasmup@gmail.com";
+                    const email = "bharadwajflasmup@gmail.com";
+                    const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
+                    
+                    let emailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`; // Desktop Default
+                    
+                    if (isMobile) {
+                      if (isAndroid) {
+                        // Android: Intent to open Gmail specifically, fallback to mailto
+                        emailUrl = `intent:mailto:${email}#Intent;scheme=mailto;package=com.google.android.gm;end`;
+                      } else {
+                        // iOS/Standard Mobile: mailto is the best default for apps
+                        emailUrl = `mailto:${email}`;
+                      }
+                    }
 
                     return [
                       { 

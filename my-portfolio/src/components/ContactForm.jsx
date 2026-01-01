@@ -13,18 +13,25 @@ export default function ContactForm() {
     
     // Simulate send
     setTimeout(() => {
-        const isTouch = typeof window !== 'undefined' && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+        const email = "bharadwajflasmup@gmail.com";
+        const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
+        
         const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
         const bodyArr = `Name: ${name}\nEmail: ${email}\n\n${message}`;
         const bodyContent = encodeURIComponent(bodyArr);
         
-        if (isTouch) {
-          // Mobile/Tablet: Open default mail client
-          const mailtoUrl = `mailto:bharadwajflasmup@gmail.com?subject=${subject}&body=${bodyContent}`;
-          window.location.href = mailtoUrl;
+        if (isMobile) {
+          if (isAndroid) {
+            // Android: Intent to open Gmail specifically
+            window.location.href = `intent:mailto:${email}?subject=${subject}&body=${bodyContent}#Intent;scheme=mailto;package=com.google.android.gm;end`;
+          } else {
+            // iOS/Standard Mobile: mailto triggers the default mail app
+            window.location.href = `mailto:${email}?subject=${subject}&body=${bodyContent}`;
+          }
         } else {
           // Desktop: Open Gmail web compose in new tab
-          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=bharadwajflasmup@gmail.com&su=${subject}&body=${bodyContent}`;
+          const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${bodyContent}`;
           window.open(gmailUrl, '_blank');
         }
         
@@ -62,11 +69,16 @@ export default function ContactForm() {
                     </div>
                     <a 
                       onClick={(e) => {
-                        const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-                        if (isTouch) {
-                          window.location.href = "mailto:bharadwajflasmup@gmail.com";
+                        const email = "bharadwajflasmup@gmail.com";
+                        const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
+                        const isiOS = typeof navigator !== 'undefined' && /iPhone|iPad|iPod/i.test(navigator.userAgent);
+                        
+                        if (isAndroid) {
+                          window.location.href = `intent:mailto:${email}#Intent;scheme=mailto;package=com.google.android.gm;end`;
+                        } else if (isiOS) {
+                          window.location.href = `mailto:${email}`;
                         } else {
-                          window.open("https://mail.google.com/mail/?view=cm&fs=1&to=bharadwajflasmup@gmail.com", "_blank");
+                          window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, "_blank");
                         }
                       }}
                       className="hover:text-white transition-colors cursor-pointer"
