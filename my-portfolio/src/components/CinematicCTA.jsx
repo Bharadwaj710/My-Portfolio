@@ -103,11 +103,15 @@ export default function CinematicCTA() {
                 <div className="flex items-center gap-6 mt-4">
                   {(() => {
                     const email = "bharadwajflasmup@gmail.com";
-                    const isTouch = typeof window !== 'undefined' && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+                    const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
                     
-                    const emailUrl = isTouch 
-                      ? `mailto:${email}` 
-                      : `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`;
+                    let emailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`; // Desktop Default
+                    
+                    if (isMobile) {
+                      // Forced Gmail App URI (Universal for Android/iOS)
+                      // This opens Gmail Compose directly without showing 'mailto:' in the To: field
+                      emailUrl = `googlegmail:///co?to=${email}`;
+                    }
 
                     return [
                       { 

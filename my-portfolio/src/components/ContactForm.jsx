@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { handleEmail } from "../utils/emailHelper";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
