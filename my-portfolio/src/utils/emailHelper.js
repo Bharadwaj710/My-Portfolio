@@ -17,37 +17,43 @@ export const handleEmail = (subject = "", body = "") => {
   const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
   const isiOS = typeof navigator !== 'undefined' && /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-  // Desktop Flow
+  const gmailWebUrl = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
+
+  // 1. Desktop Flow - Guaranteed Success
   if (!isMobile) {
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
-    window.open(gmailUrl, '_blank');
+    window.open(gmailWebUrl, '_blank');
     return;
   }
 
-  // Mobile Flow
-  let appUrl = "";
-  
+  // 2. Android Flow - Modern Intent with Native Fallback
+  // This is the most "Perfect" Android fix:
+  // - package=com.google.android.gm forces the Gmail app.
+  // - S.browser_fallback_url ensures that if the app is NOT installed, 
+  //   the browser automatically opens the web version instead of doing nothing.
   if (isAndroid) {
-    // Precise Android Intent for Gmail App
-    // This removes "mailto:" from the recipient field and forces the app
-    appUrl = `intent:#Intent;action=android.intent.action.SENDTO;data=mailto:${email};package=com.google.android.gm;S.android.intent.extra.SUBJECT=${encodedSubject};S.android.intent.extra.TEXT=${encodedBody};end;`;
-  } else if (isiOS) {
-    // iOS Gmail Deep Link
-    appUrl = `googlegmail:///co?to=${email}&subject=${encodedSubject}&body=${encodedBody}`;
-  } else {
-    // Generic Mobile Fallback
-    appUrl = `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
+    const androidIntent = `intent://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}#Intent;scheme=https;package=com.google.android.gm;S.browser_fallback_url=${encodeURIComponent(gmailWebUrl)};end`;
+    window.location.href = androidIntent;
+    return;
   }
 
-  // Failsafe mechanism: Attempt to open the app, if it fails to take focus, open web.
-  const start = Date.now();
-  window.location.href = appUrl;
+  // 3. iOS Flow - Deep Link with Timeout Failsafe
+  if (isiOS) {
+    const gmailAppUri = `googlegmail:///co?to=${email}&subject=${encodedSubject}&body=${encodedBody}`;
+    const start = Date.now();
+    
+    // Attempt to open the app
+    window.location.href = gmailAppUri;
 
-  setTimeout(() => {
-    // If the browser is still in focus after 1.5s, it means the app likely didn't open
-    if (Date.now() - start < 2000) {
-      const webFallback = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
-      window.location.href = webFallback;
-    }
-  }, 1500);
+    // Failsafe: iOS doesn't have a native "fallback" in the URL like Android.
+    // So we wait 1.2s; if the user hasn't switched to the App (browser still active), we open web.
+    setTimeout(() => {
+      if (Date.now() - start < 1500) {
+        window.location.href = gmailWebUrl;
+      }
+    }, 1200);
+    return;
+  }
+
+  // 4. Generic Mobile Fallback (e.g. windows phone, tablet browsers)
+  window.location.href = `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
 };

@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { handleEmail } from "../utils/emailHelper";
 
 /**
  * CinematicCTA Component
@@ -102,17 +103,6 @@ export default function CinematicCTA() {
                 {/* Social Links Row - Black Fill / White Borders */}
                 <div className="flex items-center gap-6 mt-4">
                   {(() => {
-                    const email = "bharadwajflasmup@gmail.com";
-                    const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                    
-                    let emailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`; // Desktop Default
-                    
-                    if (isMobile) {
-                      // Forced Gmail App URI (Universal for Android/iOS)
-                      // This opens Gmail Compose directly without showing 'mailto:' in the To: field
-                      emailUrl = `googlegmail:///co?to=${email}`;
-                    }
-
                     return [
                       { 
                         name: "GitHub", 
@@ -134,7 +124,7 @@ export default function CinematicCTA() {
                       },
                       { 
                         name: "Email", 
-                        href: emailUrl, 
+                        onClick: () => handleEmail(),
                         icon: (
                           <svg className="w-6 h-6" viewBox="0 0 24 24" fill="black" stroke="white" strokeWidth="1.5">
                             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
@@ -144,12 +134,18 @@ export default function CinematicCTA() {
                     ].map((social) => (
                       <motion.a
                         key={social.name}
-                        href={social.href}
-                        target={social.name === "Email" ? "_self" : "_blank"}
+                        href={social.href || "#"}
+                        onClick={(e) => {
+                          if (social.onClick) {
+                            e.preventDefault();
+                            social.onClick();
+                          }
+                        }}
+                        target={social.onClick ? "_self" : "_blank"}
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.2, rotate: 5 }}
                         whileTap={{ scale: 0.9 }}
-                        className="p-3 bg-zinc-900/50 backdrop-blur-md rounded-xl border border-white/10 hover:border-white/30 transition-all shadow-xl group"
+                        className="p-3 bg-zinc-900/50 backdrop-blur-md rounded-xl border border-white/10 hover:border-white/30 transition-all shadow-xl group cursor-pointer"
                       >
                         {social.icon}
                       </motion.a>
