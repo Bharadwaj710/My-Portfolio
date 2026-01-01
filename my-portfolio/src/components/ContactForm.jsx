@@ -12,16 +12,17 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus("loading");
     
-    // Simulate send
-    setTimeout(() => {
-        const subject = `Portfolio Contact from ${name}`;
-        const bodyText = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-        
-        // Use the Universal Smart Email Helper
-        handleEmail(subject, bodyText);
-        
-        setStatus("success");
-    }, 1500);
+    // For email intents/mailto to work on modern mobile browsers, 
+    // they MUST be triggered directly by a user gesture.
+    // We remove the 1.5s delay to ensure the action is allowed.
+    const subject = `Portfolio Contact from ${name}`;
+    const bodyText = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+    
+    // Trigger the email app/web instantly
+    handleEmail(subject, bodyText);
+    
+    // Set success state after a tiny delay for visual transition
+    setTimeout(() => setStatus("success"), 500);
   };
 
   return (
