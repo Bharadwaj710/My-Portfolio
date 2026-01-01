@@ -27,7 +27,7 @@ export default function EmailChooser() {
 
   const options = [
     {
-      id: "gmail-app",
+      id: "default",
       name: "Gmail App",
       icon: (
         <svg className="w-8 h-8" viewBox="0 0 24 24">
@@ -36,11 +36,7 @@ export default function EmailChooser() {
       ),
       description: "Fastest experience",
       action: () => {
-        const isAndroid = /Android/i.test(navigator.userAgent);
-        const url = isAndroid 
-          ? `intent:#Intent;action=android.intent.action.VIEW;data=mailto:${email}?subject=${encodedSubject}&body=${encodedBody};package=com.google.android.gm;end`
-          : `googlegmail:///co?to=${email}&subject=${encodedSubject}&body=${encodedBody}`;
-        window.location.href = url;
+        window.location.href = `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
         close();
       }
     },
@@ -57,21 +53,6 @@ export default function EmailChooser() {
       action: () => {
         const url = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
         window.location.href = url;
-        close();
-      }
-    },
-    {
-      id: "default",
-      name: "Default Mail",
-      icon: (
-        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-          <polyline points="22,6 12,13 2,6" />
-        </svg>
-      ),
-      description: "Any client",
-      action: () => {
-        window.location.href = `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
         close();
       }
     }
