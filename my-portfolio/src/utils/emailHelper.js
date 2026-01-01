@@ -24,11 +24,11 @@ export const handleEmail = (subject = "", body = "") => {
     return;
   }
 
-  // Case 2: Android - Use Native Intent with browser fallback
-  // - package=com.google.android.gm forces the Gmail app specifically
-  // - S.browser_fallback_url handles cases where the app is missing (WITHOUT JS TIMERS)
+  // Case 2: Android - Universal Chooser (App vs Browser)
+  // - We use scheme=https with the Gmail web URL but NO forced package.
+  // - This triggers the Android "Selector" which asks: "Open with Gmail (App) or Browser?"
   if (isAndroid) {
-    const androidIntent = `intent://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}#Intent;scheme=https;package=com.google.android.gm;S.browser_fallback_url=${encodeURIComponent(gmailWebUrl)};end`;
+    const androidIntent = `intent://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}#Intent;scheme=https;end`;
     window.location.href = androidIntent;
     return;
   }
