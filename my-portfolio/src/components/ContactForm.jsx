@@ -15,20 +15,15 @@ export default function ContactForm() {
     setTimeout(() => {
         const email = "bharadwajflasmup@gmail.com";
         const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
         
         const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
         const bodyArr = `Name: ${name}\nEmail: ${email}\n\n${message}`;
         const bodyContent = encodeURIComponent(bodyArr);
         
         if (isMobile) {
-          if (isAndroid) {
-            // Android: Intent to open Gmail specifically
-            window.location.href = `intent:mailto:${email}?subject=${subject}&body=${bodyContent}#Intent;scheme=mailto;package=com.google.android.gm;end`;
-          } else {
-            // iOS/Standard Mobile: mailto triggers the default mail app
-            window.location.href = `mailto:${email}?subject=${subject}&body=${bodyContent}`;
-          }
+          // Mobile: Open Gmail App directly with official URI
+          // This avoids "mailto:" appearing in the recipient field
+          window.location.href = `googlegmail:///co?to=${email}&subject=${subject}&body=${bodyContent}`;
         } else {
           // Desktop: Open Gmail web compose in new tab
           const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${bodyContent}`;
@@ -65,18 +60,15 @@ export default function ContactForm() {
             <div className="space-y-4 mt-12">
                 <div className="flex items-center gap-4 text-gray-300">
                     <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v10a2 2 0 002 2z" /></svg>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     </div>
                     <a 
                       onClick={(e) => {
                         const email = "bharadwajflasmup@gmail.com";
-                        const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
-                        const isiOS = typeof navigator !== 'undefined' && /iPhone|iPad|iPod/i.test(navigator.userAgent);
+                        const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
                         
-                        if (isAndroid) {
-                          window.location.href = `intent:mailto:${email}#Intent;scheme=mailto;package=com.google.android.gm;end`;
-                        } else if (isiOS) {
-                          window.location.href = `mailto:${email}`;
+                        if (isMobile) {
+                          window.location.href = `googlegmail:///co?to=${email}`;
                         } else {
                           window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, "_blank");
                         }
