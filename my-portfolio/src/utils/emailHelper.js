@@ -9,32 +9,22 @@
  */
 
 export const handleEmail = (subject = "", body = "") => {
-  const email = "bharadwajflasmup@gmail.com";
-  const encodedSubject = encodeURIComponent(subject);
-  const encodedBody = encodeURIComponent(body);
-  
   const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  const isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
 
-  const gmailWebUrl = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
-
-  // Case 1: Desktop - Open Gmail Web in new tab
+  // Case 1: Desktop - Open Gmail Web in new tab (Direct)
   if (!isMobile) {
+    const email = "bharadwajflasmup@gmail.com";
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    const gmailWebUrl = `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
     window.open(gmailWebUrl, '_blank');
     return;
   }
 
-  // Case 2: Android - Universal Chooser (App vs Browser)
-  // - We use scheme=https with the Gmail web URL but NO forced package.
-  // - This triggers the Android "Selector" which asks: "Open with Gmail (App) or Browser?"
-  if (isAndroid) {
-    const androidIntent = `intent://mail.google.com/mail/u/0/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}#Intent;scheme=https;end`;
-    window.location.href = androidIntent;
-    return;
-  }
-
-  // Case 3: iOS & Others - Use standard mailto
-  // This is the most gesture-compliant and reliable method for iOS.
-  // It will open the system's default mail app (Gmail, Apple Mail, etc.)
-  window.location.href = `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
+  // Case 2: Mobile - Trigger the Cinematic Chooser
+  // We dispatch a custom event that EmailChooser.jsx listens for.
+  const event = new CustomEvent("open-email-chooser", {
+    detail: { subject, body }
+  });
+  window.dispatchEvent(event);
 };

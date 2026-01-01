@@ -13,6 +13,7 @@ import CurvedSection from "./components/CurvedSection";
 import HeroWithCurve from "./components/HeroWithCurve";
 import Navigation from "./components/Navigation";
 import CustomCursor from "./components/CustomCursor";
+import EmailChooser from "./components/EmailChooser";
 
 export default function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -22,6 +23,7 @@ export default function App() {
 
   return (
     <div id="app-root" className="relative min-h-screen bg-black">
+      <EmailChooser />
       <CustomCursor />
       
       {/* Intro Loader */}
