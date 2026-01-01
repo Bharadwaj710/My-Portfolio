@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { handleEmail } from "../utils/emailHelper";
 
 /**
  * CinematicCTA Component
@@ -131,7 +130,7 @@ export default function CinematicCTA() {
                       },
                       { 
                         name: "Email", 
-                        onClick: () => handleEmail(),
+                        href: emailUrl, 
                         icon: (
                           <svg className="w-6 h-6" viewBox="0 0 24 24" fill="black" stroke="white" strokeWidth="1.5">
                             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
@@ -141,18 +140,12 @@ export default function CinematicCTA() {
                     ].map((social) => (
                       <motion.a
                         key={social.name}
-                        href={social.href || "#"}
-                        onClick={(e) => {
-                          if (social.onClick) {
-                            e.preventDefault();
-                            social.onClick();
-                          }
-                        }}
-                        target={social.onClick ? "_self" : "_blank"}
+                        href={social.href}
+                        target={social.name === "Email" ? "_self" : "_blank"}
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.2, rotate: 5 }}
                         whileTap={{ scale: 0.9 }}
-                        className="p-3 bg-zinc-900/50 backdrop-blur-md rounded-xl border border-white/10 hover:border-white/30 transition-all shadow-xl group cursor-pointer"
+                        className="p-3 bg-zinc-900/50 backdrop-blur-md rounded-xl border border-white/10 hover:border-white/30 transition-all shadow-xl group"
                       >
                         {social.icon}
                       </motion.a>
