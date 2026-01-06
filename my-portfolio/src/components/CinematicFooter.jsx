@@ -183,8 +183,7 @@ export default function CinematicFooter() {
             © {new Date().getFullYear()} Bharadwaj. All rights reserved.
           </p>
           <p className="text-gray-500 text-sm mt-4 md:mt-0">
-            Designed & Developed with <span className="text-red-500">❤</span>{" "}
-            using React + Tailwind CSS + Framer Motion
+            Designed & Developed with <span className="text-red-500">🤍</span>
           </p>
         </motion.div>
       </div>
