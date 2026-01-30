@@ -1,4 +1,6 @@
 import collabToolImg from "../assets/collabTool.png";
+import mySpaceImg from "../assets/My-space.png";
+import roomImg from "../assets/Room.png";
 import taskWidget from "../assets/Taskwidget.png";
 import velocitx1 from "../assets/Velocitix-1.jpg";
 import velocitx2 from "../assets/Velocitix-2.jpg";
@@ -17,8 +19,17 @@ const projects = [
         alt: "Collaboration Tool Interface",
         preload: true,
       },
+      {
+        src: mySpaceImg,
+        alt: "My Space View",
+      },
+      {
+        src: roomImg,
+        alt: "Room Collaboration View",
+      },
     ],
     link: "https://collab-tool1.vercel.app/",
+    github: "https://github.com/Bharadwaj710/Collab-Tool",
     features: [
       "Live multi-user document editing",
       "Typing indicators and synchronization",
@@ -48,6 +59,7 @@ const projects = [
       },
     ],
     link: "https://projects-hb7b.vercel.app/",
+    github: "https://github.com/Bharadwaj710/PROJECTS",
     features: [
       "Role-based login for Admins, Doctors, and Staff",
       "Patient registration and appointment scheduling",
@@ -147,7 +159,8 @@ const projects = [
         alt: "VelociTX Admin Analytics",
       },
     ],
-    link: "https://example.com/blog",
+    link: "https://velocitixai-sao9.vercel.app/",
+    github: "https://github.com/Bharadwaj710/velocitixai",
     features: [
       "AI-based career assessment using facial and voice analysis",
       "Real-time video upload and Cloudinary integration",
