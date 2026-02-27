@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { handleEmail } from "../utils/emailHelper";
+import usePerformanceMode from "../hooks/usePerformanceMode";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(""); // loading | success | error
+  const { shouldReduceMotion } = usePerformanceMode();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +33,7 @@ export default function ContactForm() {
       {/* LEFT: Levitating Glass Contact Details */}
       <motion.div 
         className="w-full md:w-1/2 relative min-h-[400px]"
-        animate={{ y: [0, -10, 0] }}
+        animate={shouldReduceMotion ? { y: 0 } : { y: [0, -10, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       >
          <div className="relative h-full w-full bg-zinc-900/30 backdrop-blur-xl border border-white/10 rounded-3xl p-10 flex flex-col justify-between overflow-hidden group hover:bg-zinc-900/40 hover:border-white/20 transition-all duration-500 shadow-2xl">
@@ -53,14 +55,16 @@ export default function ContactForm() {
                     <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     </div>
-                    <a 
+                    <a
+                      href="#"
                       onClick={(e) => {
                         e.preventDefault();
                         handleEmail();
                       }}
-                      className="hover:text-white transition-colors cursor-pointer"
+                      className="hover:text-white transition-colors cursor-pointer inline-flex items-center gap-2"
                     >
                         bharadwajflasmup@gmail.com
+                        <span className="text-xs uppercase tracking-widest text-gray-400">Email me</span>
                     </a>
                 </div>
                 <div className="flex items-center gap-4 text-gray-300">
@@ -84,7 +88,7 @@ export default function ContactForm() {
                     <input
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="John Doe"
+                        placeholder="Full name"
                         className="w-full bg-zinc-900/50 border border-zinc-800 text-white px-6 py-4 rounded-2xl focus:outline-none focus:border-white/50 focus:bg-zinc-900 transition-all placeholder-zinc-700 font-urbanist"
                         required
                     />
@@ -94,7 +98,7 @@ export default function ContactForm() {
                     <input
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="john@example.com"
+                        placeholder="Dan@gmail.com"
                         type="email"
                         className="w-full bg-zinc-900/50 border border-zinc-800 text-white px-6 py-4 rounded-2xl focus:outline-none focus:border-white/50 focus:bg-zinc-900 transition-all placeholder-zinc-700 font-urbanist"
                         required

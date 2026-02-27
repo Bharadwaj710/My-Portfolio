@@ -44,14 +44,6 @@ export default function HeroWithCurve() {
               <stop offset="50%" stopColor="#0a0a0a" stopOpacity="1" />
               <stop offset="100%" stopColor="#000000" stopOpacity="1" />
             </linearGradient>
-            
-            <filter id="heroGlow">
-              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
           </defs>
           
           {/* Animated curve path */}
@@ -72,7 +64,6 @@ export default function HeroWithCurve() {
             fill="none"
             stroke="rgba(255, 255, 255, 0.15)"
             strokeWidth="1.5"
-            filter="url(#heroGlow)"
           />
         </svg>
       </motion.div>

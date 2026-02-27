@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import skillsRaw from "../data/skills";
+import usePerformanceMode from "../hooks/usePerformanceMode";
 
 // Cinematic Skills Section - B&W Edition
 export default function ImmersiveSkillsSection() {
@@ -10,8 +11,11 @@ export default function ImmersiveSkillsSection() {
   const skills = useMemo(() => skillsRaw, []);
 
   const trackRef = useRef(null);
+  const sectionRef = useRef(null);
   const [duration, setDuration] = useState(20);
   const [isPaused, setIsPaused] = useState(false);
+  const isInView = useInView(sectionRef, { margin: "250px 0px 250px 0px" });
+  const { shouldReduceMotion } = usePerformanceMode();
 
   useEffect(() => {
     // Dynamic duration based on screen width/content
@@ -29,6 +33,7 @@ export default function ImmersiveSkillsSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="skills"
       className="relative w-full bg-black overflow-hidden py-32"
       style={{ contain: 'paint' }}
@@ -93,10 +98,10 @@ export default function ImmersiveSkillsSection() {
               style={{
                 width: "max-content",
                 animationDuration: `${duration}s`,
-                animationPlayState: isPaused ? "paused" : "running",
+                animationPlayState: isPaused || !isInView || shouldReduceMotion ? "paused" : "running",
               }}
             >
-              {[...skills, ...skills, ...skills].map((skill, idx) => (
+              {[...skills, ...skills].map((skill, idx) => (
                 <div
                   key={`${skill.name}-${idx}`}
                   className="relative group"

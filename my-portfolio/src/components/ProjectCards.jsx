@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import projects from "../data/projects";
+import usePerformanceMode from "../hooks/usePerformanceMode";
 
 // Individual Card Component
 const Card = ({ i, title, description, tech, link, github, images, color, progress, range, targetScale }) => {
@@ -8,15 +9,16 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-
-  const { scrollYProgress } = useScroll({ target: container, offset: ['start end', 'start start'] });
+  const reduceMotion = useReducedMotion();
+  const { shouldReduceMotion } = usePerformanceMode();
+  const isInView = useInView(container, { margin: "200px 0px 200px 0px" });
   
   const cardScale = useTransform(progress, range, [1, targetScale]);
   const topOffset = 30 + i * 25; 
 
   // Graceful Auto-scroll logic
   React.useEffect(() => {
-    if (images.length <= 1 || isHovered) return;
+    if (images.length <= 1 || isHovered || !isInView || shouldReduceMotion || reduceMotion) return;
 
     const interval = setInterval(() => {
       setDirection(1);
@@ -24,7 +26,7 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
     }, 4000); // 4 seconds for a graceful pace
 
     return () => clearInterval(interval);
-  }, [images.length, isHovered]);
+  }, [images.length, isHovered, isInView, shouldReduceMotion, reduceMotion]);
 
   const nextImage = (e) => {
     e.stopPropagation();
@@ -60,14 +62,16 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
     })
   };
 
+  const hasLiveLink = !!link && !link.includes("example.com");
+
   return (
     <div 
       ref={container} 
       className="h-screen flex items-start justify-center sticky top-0"
       style={{ top: topOffset, paddingTop: '60px', contain: 'layout' }}
     >
-      <motion.div 
-        style={{ scale: cardScale, willChange: 'transform' }} 
+        <motion.div 
+          style={{ scale: reduceMotion || shouldReduceMotion ? 1 : cardScale, willChange: 'transform' }} 
         className="relative w-full max-w-9xl h-[65vh] flex flex-col md:flex-row gap-8 md:gap-12 px-4"
       >
         {/* LEFT: Floating Glass Image Section (Monochrome Carousel) */}
@@ -75,7 +79,7 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
           className="w-full md:w-[60%] h-full relative group"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          animate={{ y: [0, -8, 0] }}
+          animate={isInView && !shouldReduceMotion && !reduceMotion ? { y: [0, -8, 0] } : { y: 0 }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
         >
             <div className="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10 shadow-2xl overflow-hidden z-10 transition-all duration-500 group-hover:border-white/30 group-hover:bg-white/5">
@@ -170,16 +174,26 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
 
               {/* Buttons B&W */}
               <div className="flex gap-4">
-                <a 
-                  href={link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex-1 px-6 py-4 rounded-xl bg-white text-black font-extrabold text-center hover:bg-gray-200 transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2"
-                >
-                  View Live
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                </a>
-                
+                {hasLiveLink ? (
+                  <a
+                    href={link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 px-6 py-4 rounded-xl bg-white text-black font-extrabold text-center hover:bg-gray-200 transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2"
+                  >
+                    View Live
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    className="flex-1 px-6 py-4 rounded-xl bg-zinc-700/50 text-zinc-400 font-extrabold text-center cursor-not-allowed border border-zinc-600/50"
+                  >
+                    Live Unavailable
+                  </button>
+                )}
+                 
                 <a 
                   href={github || link}
                   target="_blank" 
@@ -200,6 +214,17 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
 export default function ProjectCards() {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({ target: container, offset: ['start start', 'end end'] });
+  const getProjectOrder = (title) => {
+    if (title.includes("Real Time Collaboration Tool")) return 0;
+    if (title.includes("Velocitix AI")) return 1;
+    if (title.includes("Hospital Management Web App")) return 2;
+    if (title.includes("Task Widget Application")) return 3;
+    if (title.includes("Goal Tracker")) return 4;
+    return 999;
+  };
+  const orderedProjects = [...projects].sort(
+    (a, b) => getProjectOrder(a.title) - getProjectOrder(b.title)
+  );
 
   return (
     <section className="bg-black relative w-full pt-16 pb-32" id="projects"> 
@@ -214,8 +239,8 @@ export default function ProjectCards() {
       </div>
 
       <div ref={container} className="relative w-full px-4"> 
-         {projects.map((project, i) => {
-           const targetScale = 1 - ( (projects.length - 1 - i) * 0.05 );
+         {orderedProjects.map((project, i) => {
+           const targetScale = 1 - ( (orderedProjects.length - 1 - i) * 0.05 );
            return (
              <Card 
                 key={i} 
@@ -232,3 +257,4 @@ export default function ProjectCards() {
     </section>
   );
 }
+

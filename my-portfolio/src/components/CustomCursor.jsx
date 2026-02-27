@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
+import usePerformanceMode from "../hooks/usePerformanceMode";
 
 /**
  * CustomCursor - Elegant Hollow Ring Design
@@ -12,6 +13,7 @@ import ReactDOM from "react-dom";
 export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const [isInteractive, setIsInteractive] = useState(false);
+  const { shouldReduceMotion } = usePerformanceMode();
   
   const cursorHeadRef = useRef(null);
   const requestRef = useRef(null);
@@ -22,6 +24,11 @@ export default function CustomCursor() {
   const isFirstMove = useRef(true);
 
   useEffect(() => {
+    if (shouldReduceMotion) {
+      setIsVisible(false);
+      return;
+    }
+
     // 1. Feature Detection - Completely disable on touch devices
     const isTouch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
     if (isTouch) {
@@ -35,10 +42,14 @@ export default function CustomCursor() {
     const onMouseMove = (e) => {
       const { clientX, clientY } = e;
       mouse.current = { x: clientX, y: clientY };
-      
+
       if (isFirstMove.current) {
          pos.current = { x: clientX, y: clientY };
          isFirstMove.current = false;
+       }
+
+      if (!requestRef.current) {
+        requestRef.current = requestAnimationFrame(animate);
       }
     };
 
@@ -85,17 +96,19 @@ export default function CustomCursor() {
         cursorHeadRef.current.style.transform = `translate3d(${pos.current.x}px, ${pos.current.y}px, 0)`;
       }
 
-      requestRef.current = requestAnimationFrame(animate);
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        requestRef.current = requestAnimationFrame(animate);
+      } else {
+        requestRef.current = null;
+      }
     };
-
-    requestRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseover", onMouseOver);
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, []);
+  }, [shouldReduceMotion]);
 
   if (!isVisible) return null;
 

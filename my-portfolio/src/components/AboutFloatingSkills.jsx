@@ -1,27 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import FloatingSkillIcon from "./FloatingSkillIcon";
-
-// Import local images from assets
-import reactImg from "../assets/skills/react.png";
-import jsImg from "../assets/skills/js.png";
-import nodeImg from "../assets/skills/node.png";
-import mongoImg from "../assets/skills/mongodb.png";
-import expressImg from "../assets/skills/express.png";
-import gitImg from "../assets/skills/git.png";
+import usePerformanceMode from "../hooks/usePerformanceMode";
 
 export default function AboutFloatingSkills() {
   const [paused, setPaused] = useState(false);
-
-  // Local pictures for the about section
-  const localSkills = [
-    { name: "React", img: reactImg },
-    { name: "JavaScript", img: jsImg },
-    { name: "Node.js", img: nodeImg },
-    { name: "MongoDB", img: mongoImg },
-    { name: "Express", img: expressImg },
-    { name: "Git", img: gitImg },
-  ];
+  const [imageLoaded, setImageLoaded] = useState(true);
+  const { shouldReduceMotion } = usePerformanceMode();
 
   return (
     <section
@@ -50,29 +34,40 @@ export default function AboutFloatingSkills() {
             My goal is simple: to build fast, scalable, and meaningful applications that people enjoy using and teams can rely on.  
           </p>
 
-          <button
-            onClick={() => setPaused((p) => !p)}
-            className="px-6 py-3 rounded-full border border-gray-500 text-white hover:bg-white hover:text-black transition font-urbanist"
-          >
-            {paused ? "Play animation" : "Pause animation"}
-          </button>
         </motion.div>
 
-        {/* FLOATING ICON STAGE */}
-        <div className="relative h-[450px]">
-          {localSkills.map((skill, index) => (
-            <FloatingSkillIcon
-              key={skill.name}
-              icon={skill.img}
-              size={index % 2 === 0 ? 80 : 60} // Varied sizes for better feel
-              duration={4 + index}
-              isPaused={paused}
-              style={{
-                top: `${15 + index * 14}%`,
-                left: `${(index % 3) * 30 + 10}%`,
-              }}
-            />
-          ))}
+        {/* WAVY PHOTO FRAME */}
+        <div className="relative h-[450px] flex items-center justify-center">
+          <motion.button
+            type="button"
+            onClick={() => setPaused((p) => !p)}
+            className="relative w-[340px] h-[340px] md:w-[430px] md:h-[430px] cursor-pointer"
+            style={{ willChange: "transform" }}
+            animate={paused || shouldReduceMotion ? { y: 0, rotate: 0 } : { y: [0, -8, 0], rotate: [0, 1, 0, -1, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            aria-label="Toggle photo wave animation"
+          >
+            <div className="absolute inset-0 rounded-full border-[3px] border-white/85 shadow-[0_0_0_1px_rgba(255,255,255,0.18)]" />
+            <div className="absolute inset-[10px] rounded-full border-[3px] border-black shadow-[0_0_0_1px_rgba(255,255,255,0.32)]" />
+
+            {imageLoaded ? (
+              <img
+                src="/profile-photo.jpg"
+                alt="Bharadwaj Donthikurthi"
+                loading="lazy"
+                onError={() => setImageLoaded(false)}
+                className="absolute inset-[18px] w-[calc(100%-36px)] h-[calc(100%-36px)] object-cover rounded-full"
+              />
+            ) : (
+              <div className="absolute inset-[18px] rounded-full bg-zinc-800 flex items-center justify-center text-white text-sm font-semibold">
+                Add /public/profile-photo.jpg
+              </div>
+            )}
+
+            <span className="absolute bottom-3 right-3 text-[11px] px-2 py-1 rounded-full bg-black/50 text-gray-200 border border-white/10">
+              {paused ? "Paused" : "Click to pause"}
+            </span>
+          </motion.button>
         </div>
       </div>
     </section>

@@ -5,7 +5,6 @@ export default function CurvedSection({ children, nextBgColor = "#000000" }) {
   const containerRef = useRef(null);
   const uniqueId = useId();
   const gradId = `grad-${uniqueId.replace(/:/g, "")}`;
-  const glowId = `glow-${uniqueId.replace(/:/g, "")}`;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -51,14 +50,6 @@ export default function CurvedSection({ children, nextBgColor = "#000000" }) {
               <stop offset="50%" stopColor="#0a0a0a" stopOpacity="1" />
               <stop offset="100%" stopColor={nextBgColor} stopOpacity="1" />
             </linearGradient>
-            
-            <filter id={glowId}>
-              <feGaussianBlur stdDeviation="2" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
           </defs>
 
           {/* Main curve path */}
@@ -79,7 +70,6 @@ export default function CurvedSection({ children, nextBgColor = "#000000" }) {
             fill="none"
             stroke="rgba(255, 255, 255, 0.15)"
             strokeWidth="1.5"
-            filter={`url(#${glowId})`}
           />
         </svg>
       </motion.div>

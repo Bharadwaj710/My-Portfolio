@@ -1,12 +1,16 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Spline from "@splinetool/react-spline";
 import TypewriterText from "./TypewriterText";
 import AnimatedNavLink from "./AnimatedNavLink";
 import Logo from "./Logo";
+import usePerformanceMode from "../hooks/usePerformanceMode";
 
 export default function SplineHero() {
   const [isDesktop, setIsDesktop] = React.useState(false);
+  const { shouldReduceMotion } = usePerformanceMode();
+  const sectionRef = React.useRef(null);
+  const isHeroInView = useInView(sectionRef, { margin: "200px 0px 200px 0px" });
 
   React.useEffect(() => {
     const checkIsDesktop = () => setIsDesktop(window.innerWidth >= 768);
@@ -16,10 +20,10 @@ export default function SplineHero() {
   }, []);
 
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-black">
+    <section ref={sectionRef} className="relative w-full h-screen overflow-hidden bg-black">
       
       {/* Cinematic Reveal - Scene Fades In, Scales Down, and Clears Blur */}
-      {isDesktop ? (
+      {isDesktop && isHeroInView && !shouldReduceMotion ? (
         <motion.div
            initial={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
