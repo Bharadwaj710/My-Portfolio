@@ -49,7 +49,6 @@ export default function SplineHero() {
         className="absolute inset-0 bg-black/40 pointer-events-none" 
       />
 
-      {/* Top Bar: Logo (Left) and Nav (Right) */}
       <div className="absolute top-6 left-6 right-6 z-20 flex justify-between items-center pointer-events-none">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
@@ -64,8 +63,16 @@ export default function SplineHero() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 3, ease: "easeOut" }}
-          className="flex gap-8 pointer-events-auto"
+          className="flex gap-8 items-center pointer-events-auto"
         >
+          <a 
+            href="/Resume.pdf" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center px-5 py-2 border border-white/20 rounded-full text-xs font-bold uppercase tracking-widest text-white hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+          >
+           My Resume
+          </a>
           <AnimatedNavLink href="#" label="Home" />
           <AnimatedNavLink href="#about" label="About Me" />
           <AnimatedNavLink href="#projects" label="View Projects" />

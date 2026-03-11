@@ -215,8 +215,8 @@ export default function ProjectCards() {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({ target: container, offset: ['start start', 'end end'] });
   const getProjectOrder = (title) => {
-    if (title.includes("Real Time Collaboration Tool")) return 0;
-    if (title.includes("Velocitix AI")) return 1;
+    if (title.includes("ProedXAI")) return 0;
+    if (title.includes("Converge")) return 1;
     if (title.includes("Hospital Management Web App")) return 2;
     if (title.includes("Task Widget Application")) return 3;
     if (title.includes("Goal Tracker")) return 4;
