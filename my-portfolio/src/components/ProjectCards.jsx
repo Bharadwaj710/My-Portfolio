@@ -4,7 +4,7 @@ import projects from "../data/projects";
 import usePerformanceMode from "../hooks/usePerformanceMode";
 
 // Individual Card Component
-const Card = ({ i, title, description, tech, link, github, images, color, progress, range, targetScale }) => {
+const Card = ({ i, status, title, description, tech, link, github, images, color, progress, range, targetScale }) => {
   const container = useRef(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -14,11 +14,11 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
   const isInView = useInView(container, { margin: "200px 0px 200px 0px" });
   
   const cardScale = useTransform(progress, range, [1, targetScale]);
-  const topOffset = 30 + i * 25; 
+  const topOffset = 30; 
 
   // Graceful Auto-scroll logic
   React.useEffect(() => {
-    if (images.length <= 1 || isHovered || !isInView || shouldReduceMotion || reduceMotion) return;
+    if (!images || images.length <= 1 || isHovered || !isInView || shouldReduceMotion || reduceMotion) return;
 
     const interval = setInterval(() => {
       setDirection(1);
@@ -62,13 +62,14 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
     })
   };
 
-  const hasLiveLink = !!link && !link.includes("example.com");
+  const hasLiveLink = Boolean(link && typeof link === "string" && !link.includes("example.com") && link.trim() !== "");
+  const hasGithubLink = Boolean(github && typeof github === "string" && !github.includes("example.com") && github.trim() !== "");
 
   return (
     <div 
       ref={container} 
       className="h-screen flex items-start justify-center sticky top-0"
-      style={{ top: topOffset, paddingTop: '60px', contain: 'layout' }}
+      style={{ top: topOffset, paddingTop: '60px', zIndex: i + 1 }}
     >
         <motion.div 
           style={{ scale: reduceMotion || shouldReduceMotion ? 1 : cardScale, willChange: 'transform' }} 
@@ -79,10 +80,9 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
           className="w-full md:w-[60%] h-full relative group"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          animate={isInView && !shouldReduceMotion && !reduceMotion ? { y: [0, -8, 0] } : { y: 0 }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
+          animate={{ y: 0 }}
         >
-            <div className="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10 shadow-2xl overflow-hidden z-10 transition-all duration-500 group-hover:border-white/30 group-hover:bg-white/5">
+            <div className="absolute inset-0 bg-zinc-950 rounded-3xl border border-white/10 shadow-2xl overflow-hidden z-10 transition-all duration-500 group-hover:border-white/30">
                 {images && images.length > 0 ? (
                     <div className="relative w-full h-full flex items-center justify-center">
                         <AnimatePresence initial={false} custom={direction}>
@@ -146,63 +146,78 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
 
 
         {/* RIGHT: Project Info Section (B&W) */}
-        <div className="w-full md:w-[40%] h-full flex flex-col justify-center relative z-20">
+        <div className="w-full md:w-[40%] h-full flex flex-col relative z-20">
           
-          <div className="bg-black/80 backdrop-blur-md rounded-2xl p-8 border border-white/10 shadow-xl hover:border-white/20 transition-colors duration-300">
-              <h3 className="text-4xl md:text-5xl font-black text-white mb-4 leading-none tracking-tight font-urbanist">
+          <div className="w-full h-full bg-zinc-950/95 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-white/10 shadow-2xl hover:border-white/20 transition-colors duration-300 flex flex-col justify-between overflow-hidden">
+            <div className="flex-1 flex flex-col justify-start overflow-y-auto no-scrollbar pr-1">
+              {status && (
+                <div className="flex items-center gap-2 mb-3">
+                  <span className={`inline-block w-2 h-2 rounded-full ${
+                    status === "In Progress"
+                      ? "bg-amber-400 animate-pulse"
+                      : status === "Internship Project"
+                        ? "bg-blue-400"
+                        : "bg-emerald-400"
+                  }`} />
+                  {status !== "Completed" && (
+                    <span className="text-xs font-mono font-medium uppercase tracking-wider text-gray-300">
+                      {status}
+                    </span>
+                  )}
+                </div>
+              )}
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-3 leading-tight tracking-tight font-sans">
                 {title}
               </h3>
               
               {/* White separator */}
-              <div className="w-24 h-1 bg-white rounded-full mb-6" />
+              <div className="w-20 h-1 bg-white rounded-full mb-4" />
 
-              <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-6 font-urbanist font-normal">
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-4 font-sans font-normal">
                 {description}
               </p>
 
               {/* Technologies B&W */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {tech && tech.slice(0, 5).map((item, idx) => (
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {tech && tech.map((item, idx) => (
                   <span 
                     key={idx} 
-                    className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider bg-zinc-900 border border-zinc-800 text-gray-300 rounded-lg hover:bg-white hover:text-black transition-colors"
+                    className="px-2.5 py-1 text-xs font-bold uppercase tracking-wider bg-zinc-900 border border-zinc-800 text-gray-300 rounded-lg hover:bg-white hover:text-black transition-colors"
                   >
                     {item}
                   </span>
                 ))}
               </div>
 
+            </div>
+
               {/* Buttons B&W */}
-              <div className="flex gap-4">
-                {hasLiveLink ? (
+              {(hasLiveLink || hasGithubLink) && (
+                <div className="flex gap-4 pt-4 mt-auto border-t border-white/10">
+                {hasLiveLink && (
                   <a
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 px-6 py-4 rounded-xl bg-white text-black font-extrabold text-center hover:bg-gray-200 transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2"
+                    className="flex-1 px-5 py-3 rounded-xl bg-white text-black font-extrabold text-center hover:bg-gray-200 transition-all transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2 text-sm"
                   >
                     View Live
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                   </a>
-                ) : (
-                  <button
-                    type="button"
-                    disabled
-                    className="flex-1 px-6 py-4 rounded-xl bg-zinc-700/50 text-zinc-400 font-extrabold text-center cursor-not-allowed border border-zinc-600/50"
-                  >
-                    Live Unavailable
-                  </button>
                 )}
                  
-                <a 
-                  href={github || link}
+                {hasGithubLink && (
+                  <a 
+                  href={github}
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex-1 px-6 py-4 rounded-xl border-2 border-white/20 text-white font-bold text-center hover:bg-white hover:text-black transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                  className="flex-1 px-5 py-3 rounded-xl border-2 border-white/20 text-white font-bold text-center hover:bg-white hover:text-black transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-sm"
                 >
                   GitHub
-                </a>
-              </div>
+                  </a>
+                )}
+                </div>
+              )}
           </div>
 
         </div>
@@ -214,12 +229,11 @@ const Card = ({ i, title, description, tech, link, github, images, color, progre
 export default function ProjectCards() {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({ target: container, offset: ['start start', 'end end'] });
-  const getProjectOrder = (title) => {
-    if (title.includes("ProedXAI")) return 0;
+  const getProjectOrder = (title = "") => {
+    if (title.includes("ProEdxAI") || title.includes("ProedXAI")) return 0;
     if (title.includes("Converge")) return 1;
-    if (title.includes("Hospital Management Web App")) return 2;
-    if (title.includes("Task Widget Application")) return 3;
-    if (title.includes("Goal Tracker")) return 4;
+    if (title.includes("Navy AI")) return 2;
+    if (title.includes("WDIP") || title.includes("Workforce Deployment")) return 3;
     return 999;
   };
   const orderedProjects = [...projects].sort(
@@ -230,10 +244,10 @@ export default function ProjectCards() {
     <section className="bg-black relative w-full pt-16 pb-32" id="projects"> 
       
       <div className="max-w-7xl mx-auto px-6 mb-24 text-center">
-        <h2 className="text-6xl md:text-9xl font-black text-white mb-6 uppercase tracking-tighter font-urbanist">
-             Selected<span className="text-gray-500">Works</span>
+        <h2 className="text-6xl md:text-8xl font-normal font-serif text-white mb-6 lowercase tracking-tight">
+             selected works
         </h2>
-        <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light font-urbanist">
+        <p className="text-xl text-gray-400 max-w-2xl mx-auto font-sans font-normal">
              Monochrome precision.
         </p>
       </div>

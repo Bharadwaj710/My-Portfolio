@@ -51,11 +51,11 @@ export default function IntroLoader({ onComplete }) {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="mb-8"
         >
-          <h1 className="text-sm uppercase tracking-[0.5em] text-gray-400 font-urbanist font-bold text-center">
+          <h1 className="text-xs uppercase tracking-widest text-gray-400 font-mono text-center">
             Welcome
           </h1>
-          <h2 className="text-4xl md:text-5xl font-black text-white tracking-widest text-center mt-2 font-urbanist uppercase">
-            Initializing System
+          <h2 className="text-2xl md:text-3xl font-medium font-sans text-white tracking-tight text-center mt-2 lowercase">
+            initializing system
           </h2>
         </motion.div>
 
@@ -71,7 +71,7 @@ export default function IntroLoader({ onComplete }) {
 
         {/* Progress Display */}
         <motion.div 
-          className="flex justify-between w-full text-[10px] uppercase tracking-widest font-bold font-urbanist text-gray-500"
+          className="flex justify-between w-full text-[11px] uppercase tracking-wider font-mono text-gray-400"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}

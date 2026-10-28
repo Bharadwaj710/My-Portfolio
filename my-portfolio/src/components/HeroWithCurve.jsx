@@ -25,7 +25,7 @@ export default function HeroWithCurve() {
   );
 
   return (
-    <div ref={heroRef} className="relative">
+    <div id="hero" ref={heroRef} className="relative">
       <SplineHero />
       
       {/* Scroll-animated curved separator */}

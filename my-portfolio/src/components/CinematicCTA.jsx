@@ -55,8 +55,8 @@ export default function CinematicCTA() {
         {/* liquid Text Fill Container */}
         <div className="relative mb-12 text-center w-full">
           {/* Layer 1: Base State - Solid White Text (Slightly reduced size for composition) */}
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black font-urbanist uppercase tracking-tighter text-white leading-[0.9] select-none">
-            Ready to <br /> turn Your ideas into <br /> reality?
+          <h2 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-normal font-serif lowercase tracking-tight text-white leading-[0.95] select-none">
+            Ready to <br /> turn your ideas into <br /> reality?
           </h2>
 
           {/* Layer 2: Fill State - Black Color with Pure White Borders */}
@@ -68,9 +68,9 @@ export default function CinematicCTA() {
               filter: "drop-shadow(0 0 8px rgba(255,255,255,0.1))",
               willChange: 'clip-path'
             }}
-            className="absolute top-0 left-0 w-full text-5xl md:text-7xl lg:text-8xl font-black font-urbanist uppercase tracking-tighter text-black leading-[0.9] pointer-events-none select-none"
+            className="absolute top-0 left-0 w-full text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-normal font-serif lowercase tracking-tight text-black leading-[0.95] pointer-events-none select-none"
           >
-            Ready to <br /> turn Your ideas into <br /> reality?
+            Ready to <br /> turn your ideas into <br /> reality?
           </motion.h2>
         </div>
 
@@ -85,7 +85,7 @@ export default function CinematicCTA() {
               }}
               className="flex flex-col items-center gap-6"
             >
-                <p className="text-gray-400 text-lg md:text-xl font-urbanist max-w-xl text-center leading-relaxed italic opacity-80">
+                <p className="text-gray-300 text-base md:text-lg font-sans max-w-xl text-center leading-relaxed italic opacity-80">
                   The journey starts with a single click.
                 </p>
 
@@ -94,9 +94,9 @@ export default function CinematicCTA() {
                   href="#contact"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group relative px-14 py-4 bg-white text-black font-black font-urbanist rounded-full overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.5)] transition-all duration-500"
+                  className="group relative px-10 py-3.5 bg-white text-black font-mono font-semibold rounded-full overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.5)] transition-all duration-500"
                 >
-                   <span className="relative z-10 text-xl uppercase tracking-widest">Contact Now</span>
+                   <span className="relative z-10 text-xs md:text-sm uppercase tracking-wider">Contact Now</span>
                    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
                 </motion.a>
 

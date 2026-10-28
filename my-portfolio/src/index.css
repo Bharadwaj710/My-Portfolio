@@ -1,34 +1,49 @@
-/* Import Urbanist font from Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&display=swap");
+/* Typography: Geist & Geist Mono */
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Typography Families: Geist Sans & Geist Mono */
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Geist Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: 'Geist', sans-serif; /* fallback mapping to Geist Sans */
+
+  /* Typography Scales */
+  --text-hero: clamp(2.5rem, 5.25vw, 4.5rem);
+  --text-section: clamp(2rem, 4vw, 3.5rem);
+  --text-project: clamp(1.25rem, 2vw, 1.75rem);
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-sm: 0.875rem;
+  --text-meta: 0.75rem;
+  --text-meta-xs: 0.6875rem;
+
+  /* Line Heights */
+  --leading-display: 1.08;
+  --leading-heading: 1.15;
+  --leading-body: 1.6;
+}
 
 /* Enable smooth scrolling for the whole page */
 html {
   scroll-behavior: smooth;
+  position: relative;
 }
 
-/* small helper to pause marquee on hover */
-.marquee-container .animate-marquee {
-  animation-play-state: running;
-}
-.marquee-container:hover .animate-marquee {
-  animation-play-state: paused;
-}
-
-/* optional: hide scrollbar on WebKit */
-.marquee-container::-webkit-scrollbar {
-  display: none;
-}
-
-/* Improve scrolling experience and set default font */
+/* Base typography */
 body {
+  position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  font-family: 'Urbanist', sans-serif;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: #d1d5db;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Project Card and Carousel Styles */

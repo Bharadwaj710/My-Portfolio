@@ -1,13 +1,13 @@
 export const skills = [
   {
-    name: "React",
-    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/react.svg",
-    accentColor: "#61DAFB",
+    name: "Python",
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/python.svg",
+    accentColor: "#3776AB",
   },
   {
-    name: "JavaScript",
-    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/javascript.svg",
-    accentColor: "#F7DF1E",
+    name: "PostgreSQL",
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/postgresql.svg",
+    accentColor: "#4169E1",
   },
   {
     name: "Node.js",
@@ -15,13 +15,38 @@ export const skills = [
     accentColor: "#339933",
   },
   {
+    name: "Express",
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/express.svg",
+    accentColor: "#ffffff",
+  },
+  {
+    name: "FastAPI",
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/fastapi.svg",
+    accentColor: "#009688",
+  },
+  {
     name: "MongoDB",
     icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/mongodb.svg",
     accentColor: "#47A248",
   },
   {
-    name: "Express",
-    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/express.svg",
+    name: "TypeScript",
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/typescript.svg",
+    accentColor: "#3178C6",
+  },
+  {
+    name: "JavaScript",
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/javascript.svg",
+    accentColor: "#F7DF1E",
+  },
+  {
+    name: "React",
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/react.svg",
+    accentColor: "#61DAFB",
+  },
+  {
+    name: "Next.js",
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/nextdotjs.svg",
     accentColor: "#ffffff",
   },
   {
@@ -30,14 +55,14 @@ export const skills = [
     accentColor: "#06B6D4",
   },
   {
-    name: "Framer Motion",
-    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/framer.svg",
-    accentColor: "#0055FF",
-  },
-  {
     name: "Git",
     icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/git.svg",
     accentColor: "#F05032",
+  },
+  {
+    name: "Docker",
+    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/docker.svg",
+    accentColor: "#2496ED",
   },
 ];
 

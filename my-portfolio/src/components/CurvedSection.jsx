@@ -26,7 +26,7 @@ export default function CurvedSection({ children, nextBgColor = "#000000" }) {
   );
 
   return (
-    <section ref={containerRef} className="relative w-full bg-black" style={{ contain: 'paint' }}>
+    <section ref={containerRef} className="relative w-full bg-black">
       {/* Content - no transforms, fully visible */}
       {children}
 

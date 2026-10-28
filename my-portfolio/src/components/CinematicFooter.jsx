@@ -85,11 +85,11 @@ export default function CinematicFooter() {
           >
             <div className="flex items-center gap-4 mb-4">
               <Logo className="w-10 h-10" />
-              <h3 className="text-3xl font-extrabold text-white">
+              <h3 className="text-2xl font-semibold font-sans text-white tracking-tight">
                 Bharadwaj
               </h3>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-400 font-sans text-sm leading-relaxed font-normal">
               Full-stack developer crafting elegant solutions to complex
               problems. Focused on performance, accessibility, and user
               experience.
@@ -102,13 +102,13 @@ export default function CinematicFooter() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8 }}
           >
-            <h4 className="text-white font-semibold mb-4">Navigation</h4>
+            <h4 className="text-gray-300 font-mono text-xs uppercase tracking-wider mb-4">Navigation</h4>
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-gray-400 hover:text-indigo-400 transition-colors duration-300 text-sm"
+                    className="text-gray-400 hover:text-white transition-colors duration-300 text-sm font-sans font-medium"
                   >
                     {link.label}
                   </a>
@@ -123,7 +123,7 @@ export default function CinematicFooter() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            <h4 className="text-white font-semibold mb-4">Connect</h4>
+            <h4 className="text-gray-300 font-mono text-xs uppercase tracking-wider mb-4">Connect</h4>
             <div className="flex flex-col space-y-3">
               {socialLinks.map((social) => (
                 <a
@@ -146,7 +146,7 @@ export default function CinematicFooter() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <h4 className="text-white font-semibold mb-4">Coding Profiles</h4>
+            <h4 className="text-gray-300 font-mono text-xs uppercase tracking-wider mb-4">Coding Profiles</h4>
             <div className="flex flex-col space-y-3">
               {codingLinks.map((profile) => (
                 <a

@@ -4,7 +4,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        urbanist: ["Urbanist", "sans-serif"],
+        sans: ["'Geist'", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "Roboto", "sans-serif"],
+        mono: ["'Geist Mono'", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+        serif: ["'Geist'", "sans-serif"], // mapped to Geist to remove serif styling
+        display: ["'Geist'", "sans-serif"],
+        urbanist: ["'Geist'", "sans-serif"], // Backwards compatibility mapping to Geist
       },
       keyframes: {
         marquee: {
