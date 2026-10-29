@@ -22,10 +22,10 @@ export default function WorkSection({ onNavigate }) {
           <div className="flex items-center gap-3 mb-4">
             <span className="w-2 h-2 rounded-full bg-blue-500" />
             <span className="text-xs font-mono font-normal tracking-wider text-gray-400">
-              03 · Selected Work
+              04 · Selected Work
             </span>
           </div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans lowercase tracking-tight mb-4 text-white">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans lowercase tracking-tight mb-4 heading-matte-section">
             selected work
           </h2>
           <p className="text-gray-400 font-sans text-base md:text-lg max-w-2xl leading-relaxed font-normal">
@@ -36,7 +36,7 @@ export default function WorkSection({ onNavigate }) {
         {/* Uniform Engineering Project Index */}
         <div>
           <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
-            <h3 className="text-xl sm:text-2xl font-semibold font-sans text-white tracking-tight">
+            <h3 className="text-xl sm:text-2xl font-semibold font-sans tracking-tight heading-matte-section">
               Engineering Index
             </h3>
             <span className="text-xs font-mono text-gray-400">
@@ -66,7 +66,7 @@ export default function WorkSection({ onNavigate }) {
                       <span className="text-xs font-mono text-gray-400">
                         {project.number} /
                       </span>
-                      <h4 className="text-2xl sm:text-3xl font-semibold font-sans text-white group-hover:text-blue-400 transition-colors tracking-tight">
+                      <h4 className="text-2xl sm:text-3xl font-semibold font-sans tracking-tight title-matte-subtle">
                         {project.title}
                       </h4>
 

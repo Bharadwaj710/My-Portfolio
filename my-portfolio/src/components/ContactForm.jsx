@@ -42,7 +42,7 @@ export default function ContactForm() {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-[80px] -z-10" />
 
             <div>
-                <h3 className="text-4xl sm:text-5xl font-semibold font-sans text-white mb-6 tracking-tight leading-[1.05]">
+                <h3 className="text-4xl sm:text-5xl font-semibold font-sans mb-6 tracking-tight leading-[1.05] heading-matte-section">
                     Let's <br/> <span className="text-gray-400">Connect.</span>
                 </h3>
                 <p className="text-gray-300 text-base md:text-lg font-normal font-sans leading-relaxed max-w-sm">

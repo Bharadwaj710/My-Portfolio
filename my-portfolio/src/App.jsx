@@ -101,10 +101,10 @@ export default function App() {
                 <div className="flex items-center gap-3 mb-4">
                   <span className="w-2 h-2 rounded-full bg-blue-500" />
                   <span className="text-xs font-mono tracking-wider text-gray-400">
-                    04 · Contact
+                    05 · Contact
                   </span>
                 </div>
-                <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans lowercase tracking-tight text-white">
+                <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans lowercase tracking-tight heading-matte-section">
                   contact
                 </h2>
               </div>

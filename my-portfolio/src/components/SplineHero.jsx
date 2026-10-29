@@ -1,4 +1,5 @@
 import React from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion, useReducedMotion } from "framer-motion";
 import Logo from "./Logo";
 
@@ -83,13 +84,13 @@ export default function SplineHero() {
           className="flex items-center gap-2 mb-6 text-xs md:text-sm font-mono font-normal text-gray-400 tracking-wider"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
-          <span>B.TECH CSE · CLASS OF 2027 · INDIA</span>
+          <span>B.TECH CSE · 2027 · INDIA</span>
         </motion.div>
 
         {/* 3. Primary Headline */}
         <motion.h1
           variants={itemVariants}
-          className="font-sans text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-white leading-[1.08] tracking-tight mb-6 max-w-4xl"
+          className="font-sans text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight mb-6 max-w-4xl heading-matte-hero"
         >
           I build backend systems and practical AI applications.
         </motion.h1>
@@ -132,12 +133,11 @@ export default function SplineHero() {
             <span>↓</span>
           </a>
           <a
-            href="/Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#contact"
+            onClick={(e) => scrollToAnchor(e, "#contact")}
             className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-white/20 text-gray-300 font-sans text-sm font-medium hover:text-white hover:border-white/40 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
           >
-            <span>Resume</span>
+            <span>Get in touch</span>
             <span>↗</span>
           </a>
         </motion.div>

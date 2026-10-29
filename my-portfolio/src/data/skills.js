@@ -45,11 +45,6 @@ export const skills = [
     accentColor: "#61DAFB",
   },
   {
-    name: "Next.js",
-    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/nextdotjs.svg",
-    accentColor: "#ffffff",
-  },
-  {
     name: "Tailwind CSS",
     icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tailwindcss.svg",
     accentColor: "#06B6D4",
@@ -58,11 +53,6 @@ export const skills = [
     name: "Git",
     icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/git.svg",
     accentColor: "#F05032",
-  },
-  {
-    name: "Docker",
-    icon: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/docker.svg",
-    accentColor: "#2496ED",
   },
 ];
 

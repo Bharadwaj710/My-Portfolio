@@ -12,7 +12,7 @@ import Logo from "./Logo";
 export default function CinematicFooter() {
   const navLinks = [
     { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
+    { label: "Experience", href: "#experience" },
     { label: "Projects", href: "#projects" },
     { label: "Contact", href: "#contact" },
   ];
@@ -85,7 +85,7 @@ export default function CinematicFooter() {
           >
             <div className="flex items-center gap-4 mb-4">
               <Logo className="w-10 h-10" />
-              <h3 className="text-2xl font-semibold font-sans text-white tracking-tight">
+              <h3 className="text-2xl font-semibold font-sans tracking-tight heading-matte-hero">
                 Bharadwaj
               </h3>
             </div>
@@ -102,7 +102,7 @@ export default function CinematicFooter() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8 }}
           >
-            <h4 className="text-gray-300 font-mono text-xs uppercase tracking-wider mb-4">Navigation</h4>
+            <h4 className="font-semibold font-sans text-sm tracking-tight heading-matte-section mb-4">Navigation</h4>
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.label}>
@@ -123,7 +123,7 @@ export default function CinematicFooter() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            <h4 className="text-gray-300 font-mono text-xs uppercase tracking-wider mb-4">Connect</h4>
+            <h4 className="font-semibold font-sans text-sm tracking-tight heading-matte-section mb-4">Connect</h4>
             <div className="flex flex-col space-y-3">
               {socialLinks.map((social) => (
                 <a
@@ -146,7 +146,7 @@ export default function CinematicFooter() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <h4 className="text-gray-300 font-mono text-xs uppercase tracking-wider mb-4">Coding Profiles</h4>
+            <h4 className="font-semibold font-sans text-sm tracking-tight heading-matte-section mb-4">Coding Profiles</h4>
             <div className="flex flex-col space-y-3">
               {codingLinks.map((profile) => (
                 <a
@@ -179,10 +179,10 @@ export default function CinematicFooter() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
         >
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-400 font-sans text-sm font-normal">
             © {new Date().getFullYear()} Bharadwaj. All rights reserved.
           </p>
-          <p className="text-gray-500 text-sm mt-4 md:mt-0">
+          <p className="text-gray-400 font-sans text-sm font-normal mt-4 md:mt-0">
             Designed & Developed with <span className="text-red-500">🤍</span>
           </p>
         </motion.div>

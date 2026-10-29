@@ -74,10 +74,10 @@ export default function ExperienceSection({ onNavigate }) {
           <div className="flex items-center gap-3 mb-4">
             <span className="w-2 h-2 rounded-full bg-blue-500" />
             <span className="text-xs font-mono font-normal tracking-wider text-gray-400">
-              02 · Practical Experience
+              03 · Practical Experience
             </span>
           </div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans lowercase tracking-tight mb-4 text-white">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans lowercase tracking-tight mb-4 heading-matte-section">
             experience
           </h2>
           <p className="text-gray-400 font-sans text-base md:text-lg max-w-2xl leading-relaxed font-normal">
@@ -96,7 +96,7 @@ export default function ExperienceSection({ onNavigate }) {
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-6 border-b border-white/10">
                 <div>
                   <div className="flex flex-wrap items-center gap-3 mb-2">
-                    <h3 className="text-2xl sm:text-3xl font-semibold font-sans text-white tracking-tight">
+                    <h3 className="text-2xl sm:text-3xl font-semibold font-sans tracking-tight heading-matte-hero">
                       {exp.role}
                     </h3>
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono uppercase tracking-wider bg-blue-950/80 text-blue-400 border border-blue-800/40">

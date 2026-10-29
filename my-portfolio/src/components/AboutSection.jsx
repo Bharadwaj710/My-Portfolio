@@ -18,8 +18,8 @@ export default function AboutSection() {
     const el = trackRef.current;
     if (!el) return;
     const resize = () => {
-      const w = el.scrollWidth / 2;
-      const dur = Math.max(20, Math.round(w / 60));
+      const w = el.scrollWidth;
+      const dur = Math.max(20, Math.round(w / 42));
       setDuration(dur);
     };
     resize();
@@ -54,7 +54,7 @@ export default function AboutSection() {
               01 · About
             </span>
           </div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans text-white tracking-tight lowercase">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans tracking-tight lowercase heading-matte-section">
             about
           </h2>
         </motion.div>
@@ -148,7 +148,7 @@ export default function AboutSection() {
                 build
               </div>
               <div className="md:col-span-9 text-gray-300 text-base md:text-lg leading-relaxed font-sans font-normal">
-                Full-stack applications · REST API development · Backend business logic · PostgreSQL and MongoDB data modeling · React and Next.js interfaces
+                Full-stack applications · REST API development · Backend business logic · PostgreSQL and MongoDB data modeling · Modern React interfaces
               </div>
             </div>
 
@@ -168,7 +168,7 @@ export default function AboutSection() {
                 work with
               </div>
               <div className="md:col-span-9 text-gray-300 text-sm md:text-base leading-relaxed font-mono font-normal">
-                Python · JavaScript · React · Next.js · Node.js · Express · Flask · FastAPI · PostgreSQL · MongoDB · pgvector · Git
+                Python · JavaScript · React · Node.js · Express · Flask · FastAPI · PostgreSQL · MongoDB · pgvector · Git
               </div>
             </div>
           </div>
@@ -188,8 +188,8 @@ export default function AboutSection() {
 
           <style>{`
             @keyframes marqueeSkills {
-              from { transform: translateX(0); }
-              to { transform: translateX(-50%); }
+              0% { transform: translateX(0%); }
+              100% { transform: translateX(-100%); }
             }
             .animate-marquee-skills {
               animation: marqueeSkills linear infinite;
@@ -205,20 +205,21 @@ export default function AboutSection() {
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
+            {/* Primary Track */}
             <div
               ref={trackRef}
-              className="flex gap-4 md:gap-6 items-center py-4 animate-marquee-skills"
+              className="flex shrink-0 gap-4 md:gap-6 items-center py-4 pr-4 md:pr-6 animate-marquee-skills"
               style={{
                 width: "max-content",
                 animationDuration: `${duration}s`,
                 animationPlayState: isPaused || !isInView || shouldReduceMotion ? "paused" : "running",
               }}
             >
-              {[...skills, ...skills, ...skills].map((skill, idx) => (
+              {skills.map((skill, idx) => (
                 <div
-                  key={`${skill.name}-${idx}`}
+                  key={`${skill.name}-primary-${idx}`}
                   title={skill.name}
-                  className="relative group p-0.5"
+                  className="relative group p-0.5 shrink-0"
                 >
                   <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-zinc-950/80 backdrop-blur-md border border-white/10 flex items-center justify-center p-3 transition-all duration-300 group-hover:border-white/40 group-hover:bg-zinc-900 group-hover:scale-110 shadow-lg">
                     {/* Subtle Glow behind icon on hover */}
@@ -226,7 +227,41 @@ export default function AboutSection() {
                       className="absolute inset-0 opacity-0 group-hover:opacity-30 blur-xl rounded-2xl transition-opacity duration-300"
                       style={{ backgroundColor: skill.accentColor }}
                     />
-                    {/* Icon (Clean monochrome / subtle brand glow, NO text below) */}
+                    {/* Icon */}
+                    <img
+                      src={skill.icon}
+                      alt={skill.name}
+                      className="relative z-10 w-full h-full object-contain filter invert opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Seamless Duplicate Track for Infinite Loop */}
+            <div
+              className="flex shrink-0 gap-4 md:gap-6 items-center py-4 pr-4 md:pr-6 animate-marquee-skills"
+              aria-hidden="true"
+              style={{
+                width: "max-content",
+                animationDuration: `${duration}s`,
+                animationPlayState: isPaused || !isInView || shouldReduceMotion ? "paused" : "running",
+              }}
+            >
+              {skills.map((skill, idx) => (
+                <div
+                  key={`${skill.name}-duplicate-${idx}`}
+                  title={skill.name}
+                  className="relative group p-0.5 shrink-0"
+                >
+                  <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-zinc-950/80 backdrop-blur-md border border-white/10 flex items-center justify-center p-3 transition-all duration-300 group-hover:border-white/40 group-hover:bg-zinc-900 group-hover:scale-110 shadow-lg">
+                    {/* Subtle Glow behind icon on hover */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-30 blur-xl rounded-2xl transition-opacity duration-300"
+                      style={{ backgroundColor: skill.accentColor }}
+                    />
+                    {/* Icon */}
                     <img
                       src={skill.icon}
                       alt={skill.name}

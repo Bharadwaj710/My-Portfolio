@@ -88,7 +88,7 @@ export default function CaseStudy({ slug, onNavigate }) {
             )}
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans text-white tracking-tight leading-[1.08] mb-4">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans tracking-tight leading-[1.08] mb-4 heading-matte-hero">
             {project.title}
           </h1>
 
