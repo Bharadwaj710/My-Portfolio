@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { AnimatePresence } from "framer-motion";
 
+import HeroWithCurve from "./components/HeroWithCurve";
 import AboutSection from "./components/AboutSection";
-import IntroLoader from "./components/IntroLoader";
+import ExperienceSection from "./components/ExperienceSection";
 import WorkSection from "./components/WorkSection";
 import CaseStudy from "./components/CaseStudy";
 import ContactForm from "./components/ContactForm";
 import CinematicFooter from "./components/CinematicFooter";
 import CurvedSection from "./components/CurvedSection";
-
-import HeroWithCurve from "./components/HeroWithCurve";
 import BottomNav from "./components/BottomNav";
 import EmailChooser from "./components/EmailChooser";
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
   const isCaseStudy = currentPath.startsWith("/work/");
-  const [showLoader, setShowLoader] = useState(() => !isCaseStudy);
 
   // Sync with browser back/forward buttons
   useEffect(() => {
@@ -70,13 +67,6 @@ export default function App() {
     <div id="app-root" className="relative min-h-screen bg-black">
       <EmailChooser />
 
-      {/* Intro Loader (Home only) */}
-      <AnimatePresence mode="wait">
-        {showLoader && (
-          <IntroLoader onComplete={() => setShowLoader(false)} />
-        )}
-      </AnimatePresence>
-
       {/* Floating Bottom Section Navigation Dock */}
       <BottomNav currentPath={currentPath} onNavigate={handleNavigate} />
 
@@ -88,27 +78,30 @@ export default function App() {
         </main>
       ) : (
         <main className="relative text-gray-100 antialiased">
-          {/* Hero with scroll-animated curved bottom edge */}
+          {/* 1. Hero — Introduce Me */}
           <HeroWithCurve />
 
-          {/* Unified About & What I Do Section */}
+          {/* 2. About — Get to Know Me */}
           <CurvedSection>
             <AboutSection />
           </CurvedSection>
 
-          {/* Curated Work Section: Featured + Editorial Index */}
+          {/* 3. Experience — Show My Practical Work */}
+          <ExperienceSection onNavigate={handleNavigate} />
+
+          {/* 4. Work — What I can Demonstrate */}
           <CurvedSection>
             <WorkSection onNavigate={handleNavigate} />
           </CurvedSection>
 
-          {/* Contact */}
-          <section id="contact" className="bg-black pt-20 pb-28">
+          {/* 5. Contact — How someone can reach me */}
+          <section id="contact" className="bg-black pt-20 pb-28 border-t border-white/10">
             <div className="max-w-6xl mx-auto px-6">
               <div className="mb-14">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="w-2 h-2 rounded-full bg-blue-500" />
                   <span className="text-xs font-mono tracking-wider text-gray-400">
-                    03 · Contact
+                    04 · Contact
                   </span>
                 </div>
                 <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans lowercase tracking-tight text-white">

@@ -31,7 +31,7 @@ export default function AboutSection() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative w-full bg-black text-gray-100 pt-28 pb-32 overflow-hidden"
+      className="relative w-full bg-black text-gray-100 pt-16 sm:pt-20 pb-20 sm:pb-24 overflow-hidden"
     >
       {/* Subtle Ambient Background Gradients */}
       <div className="absolute inset-0 pointer-events-none -z-10">
@@ -48,6 +48,12 @@ export default function AboutSection() {
           transition={{ duration: 0.7 }}
           className="mb-14"
         >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-2 h-2 rounded-full bg-blue-500" />
+            <span className="text-xs font-mono font-normal tracking-wider text-gray-400">
+              01 · About
+            </span>
+          </div>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans text-white tracking-tight lowercase">
             about
           </h2>

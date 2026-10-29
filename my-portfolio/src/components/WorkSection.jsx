@@ -22,7 +22,7 @@ export default function WorkSection({ onNavigate }) {
           <div className="flex items-center gap-3 mb-4">
             <span className="w-2 h-2 rounded-full bg-blue-500" />
             <span className="text-xs font-mono font-normal tracking-wider text-gray-400">
-              02 · Selected Work
+              03 · Selected Work
             </span>
           </div>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold font-sans lowercase tracking-tight mb-4 text-white">

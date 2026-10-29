@@ -97,3 +97,65 @@ body {
   will-change: transform;
   backface-visibility: hidden;
 }
+
+/* Subtle dark glassmorphism for bottom navigation */
+.glass-nav-dock {
+  background-color: rgba(18, 18, 20, 0.82);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+@supports not ((-webkit-backdrop-filter: blur(14px)) or (backdrop-filter: blur(14px))) {
+  .glass-nav-dock {
+    background-color: #141416;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-nav-dock {
+    background-color: #141416 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* Fluid liquid glass blob active indicator */
+.liquid-glass-blob {
+  background: radial-gradient(130% 130% at 50% -20%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 45%, rgba(15, 15, 18, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 4px 12px -2px rgba(0, 0, 0, 0.6),
+    0 0 10px -1px rgba(59, 130, 246, 0.25),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.6),
+    inset 1px 0 2px 0 rgba(96, 165, 250, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.liquid-glass-blob::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 60%);
+  pointer-events: none;
+}
+
+.liquid-glass-blob::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.85), transparent);
+  border-radius: 9999px;
+  pointer-events: none;
+}
+

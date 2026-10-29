@@ -78,26 +78,37 @@ export default function BottomNav({ currentPath = "/", onNavigate }) {
       aria-label="Bottom Navigation"
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto"
     >
-      <div className="relative flex items-center gap-6 md:gap-9 px-6 md:px-8 py-2.5 bg-black/85 backdrop-blur-md border border-white/10 rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+      <div
+        className="glass-nav-dock relative flex items-center gap-1 sm:gap-2 px-2.5 sm:px-3 py-1.5 border border-white/[0.08] rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.35)]"
+        style={{
+          WebkitBackdropFilter: "blur(14px)",
+          backdropFilter: "blur(14px)",
+        }}
+      >
         {NAV_ITEMS.map((item) => {
           const isActive = activeSection === item.id;
           return (
             <button
               key={item.id}
               onClick={(e) => handleClick(e, item)}
-              className="relative py-1 text-xs md:text-sm font-sans font-medium tracking-normal lowercase transition-colors focus:outline-none"
+              className="relative py-1.5 px-3.5 sm:px-4 text-xs md:text-sm font-sans font-medium tracking-normal lowercase transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/80 rounded-full"
             >
-              {/* Active Blue Indicator Dash Above Item */}
+              {/* Fluid Liquid Glass Blob Indicator */}
               {isActive && (
-                <motion.span
-                  layoutId="bottomNavIndicator"
-                  className="absolute -top-1.5 left-0 right-0 h-[2px] bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.8)]"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                <motion.div
+                  layoutId="liquidActiveBlob"
+                  className="liquid-glass-blob absolute inset-0 rounded-full"
+                  transition={{
+                    type: "spring",
+                    stiffness: 380,
+                    damping: 26,
+                    mass: 0.6,
+                  }}
                 />
               )}
               <span
-                className={`transition-colors duration-200 ${
-                  isActive ? "text-white font-semibold" : "text-gray-400 hover:text-gray-200"
+                className={`relative z-10 transition-colors duration-200 ${
+                  isActive ? "text-white font-medium" : "text-zinc-400 hover:text-zinc-200"
                 }`}
               >
                 {item.label}
